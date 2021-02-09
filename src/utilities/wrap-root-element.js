@@ -1,6 +1,8 @@
 import React from "react";
 import { ThemeProvider } from "theme-ui";
 import { dark } from "@theme-ui/presets";
+import { client } from "../apollo/client";
+import { ApolloProvider } from "@apollo/client";
 
 const newdark = {
   ...dark,
@@ -19,6 +21,7 @@ const newdark = {
       "&:hover": {
         bg: "secondary",
         color: "background",
+        textDecoration: "none",
       },
     },
   },
@@ -58,5 +61,7 @@ const newdark = {
 };
 
 export const wrapRootElement = ({ element }) => (
-  <ThemeProvider theme={newdark}>{element}</ThemeProvider>
+  <ApolloProvider client={client}>
+    <ThemeProvider theme={newdark}>{element}</ThemeProvider>
+  </ApolloProvider>
 );

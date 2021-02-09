@@ -1,40 +1,61 @@
 import React, { useState } from "react";
-import { Text, Flex, Label, Input, Textarea, Box, Button } from "theme-ui";
-import { dark } from "@theme-ui/presets";
+import { Label, Input, Textarea, Box, Button } from "theme-ui";
 import Lolly from "../components/Lolly";
 import { Formik } from "formik";
+import { Header } from "../components/Header";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/client";
+
+const CREATE_LOLLY = gql`
+  mutation(
+    $sender: String!
+    $reciever: String!
+    $message: String!
+    $lollyTop: String!
+    $lollyMiddle: String!
+    $lollyBottom: String!
+  ) {
+    createLolly(
+      sender: $sender
+      reciever: $reciever
+      message: $message
+      lollyTop: $lollyTop
+      lollyMiddle: $lollyMiddle
+      lollyBottom: $lollyBottom
+    ) {
+      message
+    }
+  }
+`;
 
 export default () => {
   const [lollyTop, setLollyTop] = useState("#d52358");
   const [lollyMiddle, setLollyMiddle] = useState("#e95946");
   const [lollyBottom, setLollyBottom] = useState("#deaa43");
 
+  const [createLolly] = useMutation(CREATE_LOLLY);
+  const addLolly = (
+    sender: string,
+    reciever: string,
+    message: string,
+    lollyTop: string,
+    lollyMiddle: string,
+    lollyBottom: string
+  ) => {
+    createLolly({
+      variables: {
+        sender,
+        reciever,
+        message,
+        lollyTop,
+        lollyMiddle,
+        lollyBottom,
+      },
+    });
+  };
   return (
     <div style={{ margin: "40px 0px" }}>
-      <Text
-        sx={{
-          fontSize: 8,
-          fontFamily: "Yellowtail",
-          color: "#fa73d9",
-          textShadow: "#e0f 0 0 8px",
-          textAlign: "center",
-        }}
-        className="titleText"
-      >
-        virtual lollipop
-      </Text>
-      <Text
-        sx={{
-          fontSize: 3,
-          color: "#fa73d9",
-          width: "350px",
-          textShadow: "#e0f 0 0 8px",
-          textAlign: "center",
-          margin: "0 auto",
-        }}
-      >
-        because we all know someone who deserves some sugar.
-      </Text>
+      <Header />
       <div
         style={{
           marginTop: "50px",
@@ -94,28 +115,54 @@ export default () => {
                 values: { sender: "", message: "", reciever: "" },
               });
               console.log(values);
+              addLolly(
+                values.sender,
+                values.reciever,
+                values.message,
+                lollyTop,
+                lollyMiddle,
+                lollyBottom
+              );
             }}
           >
             {({ values, touched, errors, handleChange, handleSubmit }) => (
               <Box
                 as="form"
                 sx={{
-                  marginLeft: "40px",
+                  margin: "0px 30px",
                   padding: "20px 70px",
-                  width: "400px",
+                  width: "500px",
                   backgroundColor: "#0c0c0c",
                   borderRadius: "10px",
                 }}
+                onSubmit={handleSubmit}
               >
                 <Label htmlFor="reciever">To</Label>
-                <Input name="reciever" mb={3} />
+                <Input
+                  name="reciever"
+                  mb={3}
+                  value={values.reciever}
+                  onChange={handleChange}
+                />
                 <Label htmlFor="message">Say Something Nice</Label>
-                <Textarea name="message" rows="6" mb={3} />
+                <Textarea
+                  name="message"
+                  rows="6"
+                  mb={3}
+                  value={values.message}
+                  onChange={handleChange}
+                />
                 <Label htmlFor="sender">From</Label>
-                <Input name="sender" mb={3} />
+                <Input
+                  name="sender"
+                  mb={3}
+                  value={values.sender}
+                  onChange={handleChange}
+                />
                 <div style={{ textAlign: "center", marginTop: "40px" }}>
                   <Button
                     variant="secondary"
+                    type="submit"
                     sx={{
                       boxShadow: "0px 0px 12px",
                       borderRadius: "20px",

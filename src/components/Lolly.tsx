@@ -1,11 +1,23 @@
 import React from "react";
 
-export default function Lolly({ lollyTop, lollyMiddle, lollyBottom }) {
+interface Props {
+  lollyTop: string;
+  lollyMiddle: string;
+  lollyBottom: string;
+  height?: string;
+}
+
+const Lolly: React.FC<Props> = ({
+  lollyTop,
+  lollyMiddle,
+  lollyBottom,
+  height,
+}) => {
   return (
     <svg
       className="lollipop"
       width="163px"
-      height="431px"
+      height={height ? height : "431px"}
       viewBox="0 0 163 431"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
@@ -140,4 +152,6 @@ export default function Lolly({ lollyTop, lollyMiddle, lollyBottom }) {
       </g>
     </svg>
   );
-}
+};
+
+export default Lolly;
