@@ -5,7 +5,6 @@ import { Formik } from "formik";
 import { Header } from "../components/Header";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
-
 const CREATE_LOLLY = gql`
   mutation(
     $sender: String!
@@ -144,6 +143,17 @@ export default () => {
                   value={values.reciever}
                   onChange={handleChange}
                 />
+                {touched.reciever && errors.reciever ? (
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      color: "red",
+                      textAlign: "center",
+                    }}
+                  >
+                    {errors.reciever}
+                  </p>
+                ) : null}
                 <Label htmlFor="message">Say Something Nice</Label>
                 <Textarea
                   name="message"
@@ -159,6 +169,17 @@ export default () => {
                   value={values.sender}
                   onChange={handleChange}
                 />
+                {touched.sender && errors.sender ? (
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      color: "red",
+                      textAlign: "center",
+                    }}
+                  >
+                    {errors.sender}
+                  </p>
+                ) : null}
                 <div style={{ textAlign: "center", marginTop: "40px" }}>
                   <Button
                     variant="secondary"
