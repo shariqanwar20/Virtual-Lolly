@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import { Header } from "../components/Header";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
+import { navigate } from "gatsby";
 const CREATE_LOLLY = gql`
   mutation(
     $sender: String!
@@ -22,7 +23,7 @@ const CREATE_LOLLY = gql`
       lollyMiddle: $lollyMiddle
       lollyBottom: $lollyBottom
     ) {
-      message
+      id
     }
   }
 `;
@@ -50,6 +51,10 @@ export default () => {
         lollyMiddle,
         lollyBottom,
       },
+    }).then((response) => {
+      console.log(response.data.createLolly.id);
+
+      navigate(`/lolly/${response.data.createLolly.id}`);
     });
   };
   return (

@@ -2,8 +2,10 @@ import React from "react";
 import { Header } from "./Header";
 import { Box, Text } from "theme-ui";
 import Lolly from "./Lolly";
+import { Link } from "gatsby";
 
 export default ({ pageContext }) => {
+  var link = <Link to="/lolly">make your own</Link>;
   return (
     <div>
       <Header />
@@ -27,7 +29,7 @@ export default ({ pageContext }) => {
             lollyMiddle={pageContext.lollyMiddle}
             lollyBottom={pageContext.lollyBottom}
           />
-          <div>
+          <div style={{ marginLeft: "40px" }}>
             <Text
               sx={{
                 fontSize: 3,
@@ -55,7 +57,7 @@ export default ({ pageContext }) => {
               style={{
                 backgroundColor: "#272727",
                 borderRadius: "10px",
-                marginBottom: "40px",
+                marginBottom: "10px",
               }}
             >
               <Text
@@ -93,6 +95,13 @@ export default ({ pageContext }) => {
               >
                 — {pageContext.sender}
               </Text>
+            </div>
+            <div style={{ textAlign: "center", marginBottom: "30px" }}>
+              {`${pageContext.sender} made this virtual lollipop for you. You can `}
+              <Link to="/lolly" style={{ color: "#e0f" }}>
+                make your own
+              </Link>
+              {` to send to a friend who deserve some sugary treat which won't rot their teeth...`}
             </div>
           </div>
         </Box>
