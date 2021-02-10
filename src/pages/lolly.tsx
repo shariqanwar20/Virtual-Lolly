@@ -6,6 +6,7 @@ import { Header } from "../components/Header";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { navigate } from "gatsby";
+import LollyTemplate from "../components/LollyTemplate";
 const CREATE_LOLLY = gql`
   mutation(
     $sender: String!
@@ -24,9 +25,29 @@ const CREATE_LOLLY = gql`
       lollyBottom: $lollyBottom
     ) {
       id
+      sender
+      reciever
+      message
+      lollyTop
+      lollyMiddle
+      lollyBottom
     }
   }
 `;
+
+const showLolly = (props) => {
+  return (
+    <LollyTemplate
+      id={props.id}
+      sender={props.sender}
+      reciever={props.reciever}
+      message={props.message}
+      lollyTop={props.lollyTop}
+      lollyMiddle={props.lollyMiddle}
+      lollyBottom={props.lollyBottom}
+    />
+  );
+};
 
 export default () => {
   const [lollyTop, setLollyTop] = useState("#d52358");
@@ -53,8 +74,16 @@ export default () => {
       },
     }).then((response) => {
       console.log(response.data.createLolly.id);
-
-      navigate(`/lolly/${response.data.createLolly.id}`);
+      navigate(`/viewLolly?id=${response.data.createLolly.id}`);
+      showLolly({
+        id: response.data.createLolly.id,
+        sender: response.data.createLolly.sender,
+        reciever: response.data.createLolly.reciever,
+        message: response.data.createLolly.message,
+        lollyTop: response.data.createLolly.lollyTop,
+        lollyMiddle: response.data.createLolly.lollyMiddle,
+        lollyBottom: response.data.createLolly.lollyBottom,
+      });
     });
   };
   return (

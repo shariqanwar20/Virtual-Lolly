@@ -4,8 +4,7 @@ import { Box, Text } from "theme-ui";
 import Lolly from "./Lolly";
 import { Link } from "gatsby";
 
-export default ({ pageContext }) => {
-  var link = <Link to="/lolly">make your own</Link>;
+export default (props) => {
   return (
     <div>
       <Header />
@@ -14,6 +13,7 @@ export default ({ pageContext }) => {
           marginTop: "50px",
         }}
       >
+        {console.log(props)}
         <Box
           sx={{
             display: "flex",
@@ -23,11 +23,10 @@ export default ({ pageContext }) => {
             margin: "0 auto",
           }}
         >
-          {/* <Lolly lollyTop="red" lollyMiddle="yellow" lollyBottom="green" /> */}
           <Lolly
-            lollyTop={pageContext.lollyTop}
-            lollyMiddle={pageContext.lollyMiddle}
-            lollyBottom={pageContext.lollyBottom}
+            lollyTop={props.lollyTop}
+            lollyMiddle={props.lollyMiddle}
+            lollyBottom={props.lollyBottom}
           />
           <div style={{ marginLeft: "40px" }}>
             <Text
@@ -51,7 +50,7 @@ export default ({ pageContext }) => {
                 textDecoration: "underline",
                 backgroundColor: "#272727",
               }}
-            >{`https://virtual-lolly-shariq.netlify.app/lolly/${pageContext.id}`}</Text>
+            >{`https://virtual-lolly-shariq.netlify.app/viewLolly?id=${props.id}`}</Text>
             <br />
             <div
               style={{
@@ -69,7 +68,7 @@ export default ({ pageContext }) => {
                   marginLeft: "10px",
                 }}
               >
-                {pageContext.reciever}
+                {props.reciever}
               </Text>
               <br />
               <Text
@@ -81,7 +80,7 @@ export default ({ pageContext }) => {
                   marginLeft: "10px",
                 }}
               >
-                {pageContext.message}
+                {props.message}
               </Text>
               <br />
               <Text
@@ -93,11 +92,11 @@ export default ({ pageContext }) => {
                   marginLeft: "40px",
                 }}
               >
-                — {pageContext.sender}
+                — {props.sender}
               </Text>
             </div>
             <div style={{ textAlign: "center", marginBottom: "30px" }}>
-              {`${pageContext.sender} made this virtual lollipop for you. You can `}
+              {`${props.sender} made this virtual lollipop for you. You can `}
               <Link to="/lolly" style={{ color: "#e0f" }}>
                 make your own
               </Link>

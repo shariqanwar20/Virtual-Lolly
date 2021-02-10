@@ -13,32 +13,32 @@ export default () => {
       >
         <Lolly
           lollyTop="#d52358"
-          lollyMiddle="#d52358"
-          lollyBottom="#d52358"
+          lollyMiddle="#e95946"
+          lollyBottom="#deaa43"
           height="250px"
         />
         <Lolly
           lollyTop="#d52358"
-          lollyMiddle="#d52358"
-          lollyBottom="#d52358"
+          lollyMiddle="#e95946"
+          lollyBottom="#f5c64d"
           height="250px"
         />
         <Lolly
           lollyTop="#d52358"
-          lollyMiddle="#d52358"
-          lollyBottom="#d52358"
+          lollyMiddle="#e95946"
+          lollyBottom="#deaa43"
           height="250px"
         />
         <Lolly
           lollyTop="#d52358"
-          lollyMiddle="#d52358"
-          lollyBottom="#d52358"
+          lollyMiddle="#e95946"
+          lollyBottom="#f5c64d"
           height="250px"
         />
         <Lolly
           lollyTop="#d52358"
-          lollyMiddle="#d52358"
-          lollyBottom="#d52358"
+          lollyMiddle="#e95946"
+          lollyBottom="#deaa43"
           height="250px"
         />
       </div>

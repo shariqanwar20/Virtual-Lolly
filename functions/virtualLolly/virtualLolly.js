@@ -8,6 +8,7 @@ const { ApolloServer, gql } = require("apollo-server-lambda");
 const typeDefs = gql`
   type Query {
     getLollies: [Lolly!]
+    getLolly(lollyPath: ID!): Lolly
   }
   type Mutation {
     createLolly(
@@ -55,14 +56,39 @@ const resolvers = {
           return result.data.map((lolly) => {
             return {
               id: lolly.ref.id,
-              sender: lolly.sender,
-              reciever: lolly.reciever,
-              message: lolly.message,
-              lollyTop: lolly.lollyTop,
-              lollyMiddle: lolly.lollyMiddle,
-              lollyBottom: lolly.lollyBottom,
+              sender: lolly.data.sender,
+              reciever: lolly.data.reciever,
+              message: lolly.data.message,
+              lollyTop: lolly.data.lollyTop,
+              lollyMiddle: lolly.data.lollyMiddle,
+              lollyBottom: lolly.data.lollyBottom,
             };
           });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getLolly: async (_, args) => {
+      try {
+        if (process.env.FAUNADB_ADMIN_SECRET) {
+          var client = new faunadb.Client({
+            secret: process.env.FAUNADB_ADMIN_SECRET,
+          });
+          const lolly = await client.query(
+            q.Get(q.Ref(q.Collection("lolly"), args.lollyPath))
+          );
+          // console.log(lolly);
+
+          return {
+            id: lolly.ref.id,
+            sender: lolly.data.sender,
+            reciever: lolly.data.reciever,
+            message: lolly.data.message,
+            lollyTop: lolly.data.lollyTop,
+            lollyMiddle: lolly.data.lollyMiddle,
+            lollyBottom: lolly.data.lollyBottom,
+          };
         }
       } catch (error) {
         console.log(error);
@@ -101,6 +127,12 @@ const resolvers = {
           console.log(result);
           return {
             id: result.ref.id,
+            sender: result.data.sender,
+            reciever: result.data.reciever,
+            message: result.data.message,
+            lollyTop: result.data.lollyTop,
+            lollyMiddle: result.data.lollyMiddle,
+            lollyBottom: result.data.lollyBottom,
           };
         }
       } catch (error) {

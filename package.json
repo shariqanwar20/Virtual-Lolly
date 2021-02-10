@@ -30,6 +30,7 @@
     "formik": "^2.2.6",
     "gatsby": "^2.26.1",
     "gatsby-plugin-typescript": "^2.12.0",
+    "gatsby-source-graphql": "^2.14.0",
     "graphql-tag": "^2.11.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.4.3",
